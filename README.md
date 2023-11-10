@@ -13,32 +13,46 @@ Purpose
 
 The main script file contains the several function that perform the following tasks based on parameters used with the script :
 
-   - Discover and create list of all GP2 volumes in a requested region or all regions.
-   - Modify listed GP2 volumes from a file with /without snapshot.
+   - Discover and create list of all GP2, GP3, io1, io2 volumes in any single region or all regions.
+
+   - Modify listed GP2 volumes from a file with or without snapshot.
+
    - Discover all GP2 volumes in a region and modify all of them with or without snapshot.
+
    - Discover all GP2 volumes in all regions and modify all of them with or without snapshot.
+
+   - Perform any of the above action on cross accounts where AWS configuration profile, IAM role and permissions are already setup.
 
 Prerequisites
 
     An Amazon Web Services (AWS) account.
-    AWS CLI setup.
-    IAM policy/role that allows to perform volume discovery, modification and snapshot creation. (Refer: IAM_permission.txt).
+    AWS CLI setup - http://docs.aws.amazon.com/cli/latest/userguide/installing.html 
+    IAM policy/role that allows to perform volume discovery, modification and snapshot creation - Refer: IAM_permission.txt).
+    Configuration profile for cross account access - Refer : AWS_profile.txt
 
 
 Script execution
 
-- To create list of all GP2 volumes in a region or all regions ::  gp2_gp3_migration.sh --region <region_name> discover 
-     ex :  gp2_gp3_migration.sh --region us-east-1 discover
-- To create list of all GP2 volumes in all regions ::  gp2_gp3_migration.sh --region all discover
-- To migrate listed GP2 volumes from an input file without snapshot ::  gp2_gp3_migration.sh --region <region_name> <volume_list_file.txt>
-- To migrate listed GP2 volumes from an input file after successful snapshot ::  gp2_gp3_migration.sh --region <region_name> <volume_list_file.txt> --snapshot
-- To migrate all GP2 volumes in a region without snapshot ::  gp2_gp3_migration.sh --region <region_name> migrate
-- To migrate all GP2 volumes in a region after successful snapshot ::  gp2_gp3_migration.sh --region <region_name> migrate
-- To migrate all GP2 volumes across all regions without snapshot ::  gp2_gp3_migration.sh --region all migrate
-- To migrate all GP2 volumes across all regions after successful snapshot ::  gp2_gp3_migration.sh --region all migrate --snapshot
+- To create list of all GP2, GP3, io1, io2 volumes in any single region or all regions ::  gp2_gp3_migration.sh --region <region_name>/all discover
+
+- To migrate listed GP2 volumes from a file w/o snapshot ::  gp2_gp3_migration.sh --region <region_name> <volume_list_file.txt> no-snapshot
+
+- To migrate listed GP2 volumes from a file with snapshot ::  gp2_gp3_migration.sh --region <region_name> <volume_list_file.txt> snapshot
+
+- To migrate all GP2 volumes in a region w/o snapshot ::  gp2_gp3_migration.sh --region <region_name> migrate no-snapshot
+
+- To migrate all GP2 volumes in a region with snapshot ::  gp2_gp3_migration.sh --region <region_name> migrate snapshot
+
+- To migrate all GP2 volumes across all regions w/o snapshot ::  gp2_gp3_migration.sh --region all migrate no-snapshot
+
+- To migrate all GP2 volumes across all regions with snapshot ::  gp2_gp3_migration.sh --region all migrate snapshot
+
+- To perform any of the above action on cross accounts where IAM role, permission and profile is already setup, add last 2 parameters --profile <profile_name>
+
 - To track the progress of volume modification :: gp2_gp3_migration_progress.sh <gp2_vol_id.txt> <region_name>
 
 Note - snapshot created by this script will have description: "Pre GP3 migration" and tag: key=state, value=pre-gp3
+
 
 Additional Information
 
